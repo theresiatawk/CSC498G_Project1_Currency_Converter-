@@ -11,12 +11,13 @@
         android:id="@+id/name"
         android:layout_width="322dp"
         android:layout_height="43dp"
+        android:background="@drawable/custom_input"
         android:ems="10"
         android:hint="Full Name"
         android:inputType="textPersonName"
+        android:paddingBottom="24dp"
+        android:textColor="#F8F6F6"
         android:textColorHint="#FFFDFD"
-        android:background="@drawable/custom_input"
-        android:paddingBottom="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.651"
@@ -28,28 +29,30 @@
         android:id="@+id/Name"
         android:layout_width="322dp"
         android:layout_height="43dp"
+        android:background="@drawable/custom_input"
         android:ems="10"
         android:hint="Amount"
         android:inputType="textPersonName"
+        android:paddingBottom="24dp"
+        android:textColor="#F8F8F8"
         android:textColorHint="#FFFDFD"
-        android:background="@drawable/custom_input"
-        android:paddingBottom="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.651"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.324" />
+        app:layout_constraintVertical_bias="0.343" />
 
     <Spinner
         android:id="@+id/spinner"
         android:layout_width="144dp"
         android:layout_height="40dp"
-        android:layout_marginStart="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.217"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.452" />
+        app:layout_constraintVertical_bias="0.68" />
 
     <Spinner
         android:id="@+id/spinner2"
@@ -59,5 +62,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.451" />
+        app:layout_constraintVertical_bias="0.68" />
 </androidx.constraintlayout.widget.ConstraintLayout>

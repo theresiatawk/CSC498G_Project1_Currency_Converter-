@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Currency Converter App</string>
+
+    <string-array name="strings">
+        <item>USD</item>
+        <item>LBP</item>
+    </string-array>
 </resources>
