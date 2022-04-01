@@ -57,32 +57,51 @@ public class HomeActivity extends AppCompatActivity {
              & it will convert either from LBP to USD or vice versa */
             public void onClick(View view) {
                 Double answer;
-                try {
-                    Double amount_entered = Double.parseDouble(amount.getText().toString());
+                // Getting the object amount and converting it to string with removing spaces
+                String value_entered = amount.getText().toString().replaceAll(" ","");
 
-                    // Converting from USD to USD
-                    if (spinner1.getSelectedItem().toString().equals("USD") && spinner2.getSelectedItem().toString().equals("USD")) {
-                        answer = amount_entered;
-                        result.setText(answer + "  $");
-                    }
-                    // Converting from USD to LBP
-                    else if (spinner1.getSelectedItem().toString().equals("USD") && spinner2.getSelectedItem().toString().equals("LBP")) {
-                        answer = (Double) amount_entered * lira_rate;
-                        result.setText(answer + "  L.L.");
-                    }
-                    // Converting from LBP to USD
-                    else if (spinner1.getSelectedItem().toString().equals("LBP") && spinner2.getSelectedItem().toString().equals("LBP")) {
-                        answer = amount_entered;
-                        result.setText(answer + "  L.L.");
-                    }
-                    // Converting from LBP to LBP
-                    else if (spinner1.getSelectedItem().toString().equals("LBP") && spinner2.getSelectedItem().toString().equals("USD")) {
-                        answer = (Double) amount_entered / lira_rate;
-                        result.setText(answer + "  $");
-                    }
+                // Getting the object amount and converting it to string
+                String user_name = name.getText().toString();
+
+                if (user_name.length() == 0 && value_entered.length() == 0) {
+                    String message = "Error: You should fill the required information.";
+                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                 }
-                catch (NumberFormatException e){
-                    Toast.makeText(getApplicationContext(), "Error: The Format is Incorrect. Please Enter a correct number", Toast.LENGTH_LONG).show();
+                else if (user_name.length() == 0){
+                    String message = "Please enter your name.";
+                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                }
+                else if (value_entered.length() == 0){
+                    String message = "Please enter the amount you want to convert.";
+                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                }
+                else {
+                    try {
+                        Double amount_entered = Double.parseDouble(value_entered);
+
+                        // Converting from USD to USD
+                        if (spinner1.getSelectedItem().toString().equals("USD") && spinner2.getSelectedItem().toString().equals("USD")) {
+                            answer = amount_entered;
+                            result.setText(answer + "  $");
+                        }
+                        // Converting from USD to LBP
+                        else if (spinner1.getSelectedItem().toString().equals("USD") && spinner2.getSelectedItem().toString().equals("LBP")) {
+                            answer = (Double) amount_entered * lira_rate;
+                            result.setText(answer + "  L.L.");
+                        }
+                        // Converting from LBP to USD
+                        else if (spinner1.getSelectedItem().toString().equals("LBP") && spinner2.getSelectedItem().toString().equals("LBP")) {
+                            answer = amount_entered;
+                            result.setText(answer + "  L.L.");
+                        }
+                        // Converting from LBP to LBP
+                        else if (spinner1.getSelectedItem().toString().equals("LBP") && spinner2.getSelectedItem().toString().equals("USD")) {
+                            answer = (Double) amount_entered / lira_rate;
+                            result.setText(answer + "  $");
+                        }
+                    } catch (NumberFormatException e) {
+                        Toast.makeText(getApplicationContext(), "Error: The format is incorrect. Please enter a correct number", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });
