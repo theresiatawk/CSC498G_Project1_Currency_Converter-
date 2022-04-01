@@ -15,6 +15,7 @@
         android:text="To"
         android:textColor="@color/white"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.997"
@@ -31,7 +32,7 @@
         android:hint="Full Name"
         android:inputType="textPersonName"
         android:paddingBottom="30dp"
-        android:textColor="#F8F6F6"
+        android:textColor="#FAF8F7"
         android:textColorHint="#FFFDFD"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -42,7 +43,7 @@
         app:layout_constraintVertical_bias="0.248" />
 
     <EditText
-        android:id="@+id/Name"
+        android:id="@+id/amount"
         android:layout_width="359dp"
         android:layout_height="107dp"
         android:background="@drawable/custom_input"
@@ -50,9 +51,10 @@
         android:hint="Amount"
         android:inputType="textPersonName"
         android:paddingBottom="30dp"
-        android:textColor="#F8F8F8"
+        android:textColor="#FF5722"
         android:textColorHint="#FFFDFD"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.54"
@@ -90,6 +92,7 @@
         android:text="From"
         android:textColor="@color/white"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.133"
@@ -99,9 +102,10 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="278dp"
-        android:layout_height="62dp"
+        android:layout_width="262dp"
+        android:layout_height="77dp"
         android:background="#FAF8F8"
+        android:foregroundGravity="center_horizontal"
         android:gravity="center"
         android:text="Swift Currency"
         android:textColor="#090909"
@@ -109,8 +113,34 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.08" />
+        app:layout_constraintVertical_bias="0.081" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="159dp"
+        android:layout_height="60dp"
+        android:backgroundTint="#FFFDFD"
+        android:shadowColor="#0C0C0C"
+        android:text="Convert"
+        android:textAlignment="gravity"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.761" />
+
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="193dp"
+        android:layout_height="75dp"
+        android:textColor="#FF5722"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.892" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,12 +6,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 
 public class HomeActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     Spinner spinner1, spinner2;
+    EditText name, amount;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,9 +25,13 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         // Hiding the Action Bar from the layout
         getSupportActionBar().hide();
 
+        // Referencing our plain texts we have
+        name = (EditText) findViewById(R.id.name);
+        amount = (EditText) findViewById(R.id.amount);
+
         // Referencing the spinners we have
-        spinner1 = findViewById(R.id.spinner);
-        spinner2 = findViewById(R.id.spinner2);
+        spinner1 = (Spinner) findViewById(R.id.spinner);
+        spinner2 = (Spinner) findViewById(R.id.spinner2);
 
         // Fills our spinners with the array we just created in strings.xml file
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.strings, android.R.layout.simple_spinner_item);
@@ -38,8 +46,9 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         spinner2.setOnItemSelectedListener(this);
     }
     @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
+    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+        String from = adapterView.getItemAtPosition(position).toString();
+        Toast.makeText(getApplicationContext(),from, Toast.LENGTH_LONG ).show();
     }
 
     @Override
