@@ -45,11 +45,10 @@ public class HomeActivity extends AppCompatActivity {
 
         // Fills our spinners with the array we just created
         ArrayAdapter adapter1 = new ArrayAdapter<String>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, items);
-        ArrayAdapter adapter2 = new ArrayAdapter<String>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, items);
 
         // Connecting spinners with the adapter
         spinner1.setAdapter(adapter1);
-        spinner2.setAdapter(adapter2);
+        spinner2.setAdapter(adapter1);
 
         convert.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,19 +62,23 @@ public class HomeActivity extends AppCompatActivity {
                 // Getting the object amount and converting it to string
                 String user_name = name.getText().toString();
 
+                // In case no value was entered by the user
                 if (user_name.length() == 0 && value_entered.length() == 0) {
                     String message = "Error: You should fill the required information.";
                     Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                 }
+                // In case the user does not enter his/her name
                 else if (user_name.length() == 0){
                     String message = "Please enter your name.";
                     Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                 }
+                // In case the user does not enter the amount he/she wants to convert
                 else if (value_entered.length() == 0){
                     String message = "Please enter the amount you want to convert.";
                     Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                 }
                 else {
+                    // Try catch method in case the user has entered a wrong number format
                     try {
                         Double amount_entered = Double.parseDouble(value_entered);
 
@@ -87,12 +90,12 @@ public class HomeActivity extends AppCompatActivity {
                         // Converting from USD to LBP
                         else if (spinner1.getSelectedItem().toString().equals("USD") && spinner2.getSelectedItem().toString().equals("LBP")) {
                             answer = (Double) amount_entered * lira_rate;
-                            result.setText(answer + "  L.L.");
+                            result.setText(answer + "  L.L");
                         }
                         // Converting from LBP to USD
                         else if (spinner1.getSelectedItem().toString().equals("LBP") && spinner2.getSelectedItem().toString().equals("LBP")) {
                             answer = amount_entered;
-                            result.setText(answer + "  L.L.");
+                            result.setText(answer + "  L.L");
                         }
                         // Converting from LBP to LBP
                         else if (spinner1.getSelectedItem().toString().equals("LBP") && spinner2.getSelectedItem().toString().equals("USD")) {
