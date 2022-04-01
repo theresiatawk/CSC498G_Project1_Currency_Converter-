@@ -26,7 +26,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         spinner2 = findViewById(R.id.spinner2);
 
         // Fills our spinners with the array we just created in strings.xml file
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.strings, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.strings, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // Connecting spinners with the adapter

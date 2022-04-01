@@ -6,9 +6,11 @@
         <entry key="..\:/Users/HES/AndroidStudioProjects/CurrencyConverterApp/app/src/main/res/drawable/custom_input.xml" value="0.179" />
         <entry key="..\:/Users/HES/AndroidStudioProjects/CurrencyConverterApp/app/src/main/res/drawable/custom_spinner.xml" value="0.1" />
         <entry key="..\:/Users/HES/AndroidStudioProjects/CurrencyConverterApp/app/src/main/res/drawable/ic_person.xml" value="0.1295" />
-        <entry key="..\:/Users/HES/AndroidStudioProjects/CurrencyConverterApp/app/src/main/res/layout/activity_home.xml" value="0.12" />
+        <entry key="..\:/Users/HES/AndroidStudioProjects/CurrencyConverterApp/app/src/main/res/layout/activity_home.xml" value="0.14666666666666667" />
         <entry key="..\:/Users/HES/AndroidStudioProjects/CurrencyConverterApp/app/src/main/res/layout/activity_main.xml" value="0.10666666666666667" />
+        <entry key="..\:/Users/HES/AndroidStudioProjects/CurrencyConverterApp/app/src/main/res/layout/color_spinner_layout.xml" value="0.1" />
         <entry key="..\:/Users/HES/AndroidStudioProjects/CurrencyConverterApp/app/src/main/res/layout/custom_spinner.xml" value="0.1" />
+        <entry key="..\:/Users/HES/AndroidStudioProjects/CurrencyConverterApp/app/src/main/res/layout/spinner_item_layout.xml" value="0.1" />
       </map>
     </option>
   </component>
