@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         // Hiding the Action Bar from the layout
         getSupportActionBar().hide();
 
-        // After 2 seconds it will move from this activity to the home activity (Splash Screen)
+        // After 2 seconds it will move automatically from this activity to the home activity (Splash Screen)
         timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
