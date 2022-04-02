@@ -27,8 +27,24 @@ public class MainActivity extends AppCompatActivity {
             String result = "";
             URL url;
             HttpURLConnection http;
-            
-            return null;
+
+            try{
+                url = new URL(urls[0]);
+                http = (HttpURLConnection) url.openConnection();
+                InputStream in = http.getInputStream();
+                InputStreamReader reader = new InputStreamReader(in);
+                int data = reader.read();
+                while(data != -1){
+                    char current = (char) data;
+                    result += current;
+                    data = reader.read();
+                }
+            }
+            catch(Exception e){
+                e.printStackTrace();
+                return null;
+            }
+            return result;
         }
         protected void onPostExecute(String s){
 
