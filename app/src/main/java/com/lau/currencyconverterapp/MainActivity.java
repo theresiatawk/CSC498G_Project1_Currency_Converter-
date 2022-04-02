@@ -30,13 +30,23 @@ public class MainActivity extends AppCompatActivity {
 
             try{
                 url = new URL(urls[0]);
+
+                // Opening a connection between android app and the url
                 http = (HttpURLConnection) url.openConnection();
+
+                // I need an Input Stream to read the output of the API
                 InputStream in = http.getInputStream();
                 InputStreamReader reader = new InputStreamReader(in);
+
+                // Cursor that will read the output of the api
                 int data = reader.read();
+
+                // The data cursor did not reach the end of the file repeat
                 while(data != -1){
                     char current = (char) data;
+                    //Appending the current to final String Result
                     result += current;
+                    // Move the cursor one character
                     data = reader.read();
                 }
             }
