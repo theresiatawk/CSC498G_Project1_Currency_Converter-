@@ -25,9 +25,12 @@ curl_close($ch_session);
 $server_response = (array) json_decode($response,true);
 $array_length =  sizeof($server_response['buy']);
 
+$json = [];
+$json ["Rate"] = (array) $server_response['buy'][$array_length - 1][1];
+
 //echo "<pre>";print_r($server_response);echo"</pre>";
 //echo "https://lirarate.org/wp-json/lirarate/v2/rates?currency=LBP&_ver=t$variant_part";
-$json_response = json_encode($server_response['buy'][$array_length - 1][1]);
+$json_response = json_encode($json);
 echo $json_response;
 
 ?>
