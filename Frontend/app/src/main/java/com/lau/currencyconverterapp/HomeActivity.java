@@ -17,7 +17,7 @@ import android.widget.Toast;
 public class HomeActivity extends AppCompatActivity {
 
     Spinner spinner1, spinner2;
-    EditText name, amount;
+    EditText amount;
     Button convert;
     TextView result;
     int lira_rate;
@@ -33,7 +33,6 @@ public class HomeActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         // Referencing our texts and the button we have
-        name = (EditText) findViewById(R.id.name);
         amount = (EditText) findViewById(R.id.amount);
         convert = (Button) findViewById(R.id.convert);
         result = (TextView) findViewById(R.id.result);
@@ -62,22 +61,9 @@ public class HomeActivity extends AppCompatActivity {
                 // Getting the object amount and converting it to string with removing spaces
                 String value_entered = amount.getText().toString().replaceAll(" ","");
 
-                // Getting the object amount and converting it to string
-                String user_name = name.getText().toString();
-
                 // In case no value was entered by the user
-                if (user_name.length() == 0 && value_entered.length() == 0) {
-                    String message = "Error: You should fill the required information.";
-                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-                }
-                // In case the user does not enter his/her name
-                else if (user_name.length() == 0){
-                    String message = "Please enter your name.";
-                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-                }
-                // In case the user does not enter the amount he/she wants to convert
-                else if (value_entered.length() == 0){
-                    String message = "Please enter the amount you want to convert.";
+                if (value_entered.length() == 0) {
+                    String message = "Error: You should fill the amount to convert!";
                     Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                 }
                 else {
