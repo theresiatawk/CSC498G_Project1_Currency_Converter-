@@ -64,10 +64,8 @@ public class MainActivity extends AppCompatActivity {
             try{
                 // Convert the string that we have to a json object
                 JSONObject json = new JSONObject(s);
-                String created_at = json.getString("created_at");
-                String joke = json.getString("value");
-                Log.i("Created_at:", created_at);
-                Log.i("Joke:", joke);
+                //String created_at = json.getString("created_at");
+                //String joke = json.getString("value");
 
             }
             catch(Exception e){
@@ -80,9 +78,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        String url = "http://192.168.106.1/mobileproject1/get.php";
-//        DownloadTask task = new DownloadTask();
-//        task.execute(url);
+        String url = "http://192.168.106.1/CSC498G_Project1_Currency_Converter-/backend/get.php";
+        DownloadTask task = new DownloadTask();
+       task.execute(url);
 
         // Hiding the Action Bar from the layout
         getSupportActionBar().hide();
