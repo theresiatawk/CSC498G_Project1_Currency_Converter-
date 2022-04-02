@@ -1,8 +1,21 @@
 <?php
 
+date_default_timezone_set('Asia/Beirut');
+
+$year = intval(date('Y'));
+$month = intval(date('m'));
+$day = intval(date('d'));
+$hour = intval(date('h'));
+
+
+// Creating the variant part of the api which is the date and time
+$variant_part = strval($year.$month.$day.$hour);
+
+$url = "https://lirarate.org/wp-json/lirarate/v2/rates?currency=LBP&_ver=t$variant_part";
+
 $ch_session = curl_init();
 
-curl_setopt($ch_session, CURLOPT_URL, 'https://lirarate.org/wp-json/lirarate/v2/rates?currency=LBP&_ver=t20224216');
+curl_setopt($ch_session, CURLOPT_URL, $url);
 curl_setopt($ch_session, CURLOPT_RETURNTRANSFER, true);
 
 $response = curl_exec($ch_session);
