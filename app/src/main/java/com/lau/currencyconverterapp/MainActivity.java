@@ -57,7 +57,22 @@ public class MainActivity extends AppCompatActivity {
             return result;
         }
         protected void onPostExecute(String s){
+            Log.i("Result:", s);
 
+            super.onPostExecute(s);
+
+            try{
+                // Convert the string that we have to a json object
+                JSONObject json = new JSONObject(s);
+                String created_at = json.getString("created_at");
+                String joke = json.getString("value");
+                Log.i("Created_at:", created_at);
+                Log.i("Joke:", joke);
+
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
         }
     }
     @Override
