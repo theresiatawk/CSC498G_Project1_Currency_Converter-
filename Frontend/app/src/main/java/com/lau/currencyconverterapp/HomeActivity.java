@@ -13,6 +13,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -91,7 +96,21 @@ public class HomeActivity extends AppCompatActivity {
                             answer = (Double) amount_entered / lira_rate;
                             result.setText(answer + "  $");
                         }
-                    } catch (NumberFormatException e) {
+                        URL url_post = new URL("http://localhost/CSC498G_Project1_Currency_Converter-/backend/post.php");
+
+                        HttpURLConnection connection = (HttpURLConnection)url_post.openConnection();
+
+                        connection.setRequestMethod("POST");
+                        connection.setRequestProperty("Content-Type", "application/json; utf-8");
+                        connection.setRequestProperty("Accept", "application/json");
+                        connection.setDoOutput(true);
+                        String jsonInputString = {currency_rate": "lira_rate", "amount_to_be_converted": "amount_entered"}';
+
+
+
+
+
+                    } catch (NumberFormatException | IOException e) {
                         Toast.makeText(getApplicationContext(), "Error: The format is incorrect. Please enter a correct number", Toast.LENGTH_LONG).show();
                     }
                 }
