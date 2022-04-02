@@ -2,6 +2,7 @@ package com.lau.currencyconverterapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,12 +20,14 @@ public class HomeActivity extends AppCompatActivity {
     EditText name, amount;
     Button convert;
     TextView result;
-    int lira_rate = 25000;
+    int lira_rate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        Intent x = getIntent();
+        lira_rate = x.getIntExtra("lira_rate", 0);
 
         // Hiding the Action Bar from the layout
         getSupportActionBar().hide();

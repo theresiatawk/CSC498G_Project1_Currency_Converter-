@@ -20,6 +20,7 @@ import java.util.TimerTask;
 public class MainActivity extends AppCompatActivity {
 
     Timer timer;
+    Integer final_rate;
     // This class is implemented to run functions on the background of our applictaion
     public class DownloadTask extends AsyncTask<String, Void, String> {
 
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 JSONObject json = new JSONObject(s);
                 String rate = json.getString("Rate");
                 Log.i("Final rate", rate);
-                Integer final_rate = Integer.parseInt(rate);
+                final_rate = Integer.parseInt(rate);
 
             }
             catch(Exception e){
@@ -92,9 +93,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                intent.putExtra("lira_rate", final_rate);
                 startActivity(intent);
-
-                finish();
+                //finish();
             }
         }, 2000);
 
