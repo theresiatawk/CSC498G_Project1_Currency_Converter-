@@ -80,9 +80,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String url = "http://192.168.106.1/mobileproject1/get.php";
-        DownloadTask task = new DownloadTask();
-        task.execute(url);
+//        String url = "http://192.168.106.1/mobileproject1/get.php";
+//        DownloadTask task = new DownloadTask();
+//        task.execute(url);
 
         // Hiding the Action Bar from the layout
         getSupportActionBar().hide();
