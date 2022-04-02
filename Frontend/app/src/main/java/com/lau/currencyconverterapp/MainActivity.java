@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             try{
                 // Convert the string that we have to a json object
                 JSONObject json = new JSONObject(s);
-                String created_at = json.getString("omt");
+                String created_at = json.getString("buy");
                 Log.i("RESULT", created_at);
 
 
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String url = "http://192.168.106.1/CSC498G_Project1_Currency_Converter-/backend/get.php";
+        String url = "https://lirarate.org/wp-json/lirarate/v2/omt?currency=LBP&_ver=t20224220";
         DownloadTask task = new DownloadTask();
        task.execute(url);
 
