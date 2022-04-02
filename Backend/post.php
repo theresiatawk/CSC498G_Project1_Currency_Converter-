@@ -7,7 +7,7 @@ $currency = $_POST["currency"];
 
 // Insert variables in the database
 $query = $mysqli->prepare("INSERT INTO conversions(currency_rate, amount_to_be_converted, currency) VALUES (?, ?, ?);");
-$query->bind_param("iis", $currency_rate, $amount_to_be_converted, $semster);
+$query->bind_param("iis", $currency_rate, $amount_to_be_converted, $currency);
 $query->execute();
 
 $response = [];
