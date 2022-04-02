@@ -64,8 +64,9 @@ public class MainActivity extends AppCompatActivity {
             try{
                 // Convert the string that we have to a json object
                 JSONObject json = new JSONObject(s);
-                //String created_at = json.getString("created_at");
-                //String joke = json.getString("value");
+                String created_at = json.getString("omt");
+                Log.i("RESULT", created_at);
+
 
             }
             catch(Exception e){
