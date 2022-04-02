@@ -80,6 +80,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        String url = "";
+        DownloadTask task = new DownloadTask();
+        task.execute(url);
+
         // Hiding the Action Bar from the layout
         getSupportActionBar().hide();
 
