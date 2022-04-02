@@ -65,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
                 // Convert the string that we have to a json object
                 JSONObject json = new JSONObject(s);
                 String rate = json.getString("Rate");
-                Log.i("Final Amount", rate);
-
+                Log.i("Final rate", rate);
+                Integer final_rate = Integer.parseInt(rate);
 
             }
             catch(Exception e){
@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                 startActivity(intent);
+
                 finish();
             }
         }, 2000);
