@@ -3,9 +3,10 @@ package com.lau.currencyconverterapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,18 +14,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import org.json.JSONObject;
+
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
-import java.net.URLConnection;
-import java.nio.charset.StandardCharsets;
 
 
 public class HomeActivity extends AppCompatActivity {
@@ -35,7 +30,56 @@ public class HomeActivity extends AppCompatActivity {
     TextView result;
     String currency;
     int lira_rate;
+    public class DownloadTask extends AsyncTask<String, Void, String> {
 
+        protected String doInBackground(String... urls) {
+
+            URL url;
+            HttpURLConnection http;
+            String urlParameters;
+
+            try{
+                url = new URL(urls[0]);
+                urlParameters = "currency_amount=lira_rate&amount_to_be_converted=amount_entered&currency=currency";
+
+                // Opening a connection between android app and the url
+                http = (HttpURLConnection) url.openConnection();
+
+                http.setRequestMethod("POST");
+                http.setDoOutput(true);
+
+                // I need an Input Stream to write the output to the API
+                OutputStream out = http.getOutputStream();
+                OutputStreamWriter writer = new OutputStreamWriter(out);
+
+                // Cursor that will read the output of the api
+                writer.write(urlParameters);
+
+                // The data cursor did not reach the end of the file repeat
+
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+            return null;
+        }
+        protected void onPostExecute(String s){
+            Log.i("Result", s);
+
+            super.onPostExecute(s);
+
+            try{
+                // Convert the string that we have to a json object
+                JSONObject json = new JSONObject(s);
+                String rate = json.getString("Rate");
+                Log.i("Final rate", rate);
+
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,29 +149,6 @@ public class HomeActivity extends AppCompatActivity {
                             answer = (Double) amount_entered / lira_rate;
                             result.setText(answer + "  $");
                         }
-                        String urlParameters = "currency_amount=lira_rate&amount_to_be_converted=amount_entered&currency=currency";
-                        URL url = new URL("http://192.168.106.1/CSC498G_Project1_Currency_Converter-/backend/post.php");
-                        URLConnection conn = url.openConnection();
-
-                        conn.setDoOutput(true);
-
-                        OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
-
-                        writer.write(urlParameters);
-                        writer.flush();
-
-                        String line;
-                        BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
-                        while ((line = reader.readLine()) != null) {
-                            System.out.println(line);
-                        }
-                        writer.close();
-                        reader.close();
-                        } catch (MalformedURLException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
                     } catch (NumberFormatException e) {
                         Toast.makeText(getApplicationContext(), "Error: The format is incorrect. Please enter a correct number", Toast.LENGTH_LONG).show();
                     }
