@@ -13,13 +13,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 
 
@@ -100,44 +104,32 @@ public class HomeActivity extends AppCompatActivity {
                         else if (spinner1.getSelectedItem().toString().equals("LBP") && spinner2.getSelectedItem().toString().equals("USD")) {
                             answer = (Double) amount_entered / lira_rate;
                             result.setText(answer + "  $");
-//                        }
-//                        URL url_post = new URL("http://localhost/CSC498G_Project1_Currency_Converter-/backend/post.php");
-//
-//                        HttpURLConnection connection = (HttpURLConnection)url_post.openConnection();
-//
-//                        connection.setRequestMethod("POST");
-//                        connection.setRequestProperty("Content-Type", "application/json; utf-8");
-//                        connection.setRequestProperty("Accept", "application/json");
-//                        connection.setDoOutput(true);
-//                        String jsonInputString = "{\"currency_rate\": lira_rate, \"amount_to_be_converted\": amount_entered, \"currency\":currency}";
-//                        try(OutputStream os = connection.getOutputStream()) {
-//                            byte[] input = jsonInputString.getBytes("utf-8");
-//                            os.write(input, 0, input.length);
-                            String urlParameters  = "currency_amount=lira_rate&amount_to_be_converted=amount_entered&currency=currency";
-                            byte[] postData       = urlParameters.getBytes( StandardCharsets.UTF_8 );
-                            int    postDataLength = postData.length;
-                            String request        = "http://localhost/CSC498G_Project1_Currency_Converter-/backend/post.php";
-                            URL    url            = new URL( request );
-                            HttpURLConnection conn= (HttpURLConnection) url.openConnection();
-                            conn.setDoOutput( true );
-                            conn.setInstanceFollowRedirects( false );
-                            conn.setRequestMethod( "POST" );
-                            conn.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded");
-                            conn.setRequestProperty( "charset", "utf-8");
-                            conn.setRequestProperty( "Content-Length", Integer.toString( postDataLength ));
-                            conn.setUseCaches( false );
-                            try( DataOutputStream wr = new DataOutputStream( conn.getOutputStream())) {
-                                wr.write( postData );
-                            }
                         }
-                    } catch (NumberFormatException e) {
-                        Toast.makeText(getApplicationContext(), "Error: The format is incorrect. Please enter a correct number", Toast.LENGTH_LONG).show();
-                    } catch (ProtocolException e) {
-                        e.printStackTrace();
-                    } catch (MalformedURLException e) {
+                        String urlParameters = "currency_amount=lira_rate&amount_to_be_converted=amount_entered&currency=currency";
+                        URL url = new URL("http://192.168.106.1/CSC498G_Project1_Currency_Converter-/backend/post.php");
+                        URLConnection conn = url.openConnection();
+
+                        conn.setDoOutput(true);
+
+                        OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
+
+                        writer.write(urlParameters);
+                        writer.flush();
+
+                        String line;
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+                        while ((line = reader.readLine()) != null) {
+                            System.out.println(line);
+                        }
+                        writer.close();
+                        reader.close();
+                        } catch (MalformedURLException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
                         e.printStackTrace();
+                    } catch (NumberFormatException e) {
+                        Toast.makeText(getApplicationContext(), "Error: The format is incorrect. Please enter a correct number", Toast.LENGTH_LONG).show();
                     }
                 }
             }
