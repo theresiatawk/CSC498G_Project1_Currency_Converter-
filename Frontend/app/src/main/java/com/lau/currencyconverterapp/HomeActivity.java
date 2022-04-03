@@ -33,9 +33,11 @@ public class HomeActivity extends AppCompatActivity {
     Spinner spinner1, spinner2;
     EditText amount;
     Button convert;
-    TextView result;
+    TextView result, rate_result;
     String currency;
     int lira_rate;
+
+    // Implementing the post request using this class
     public class DownloadTask extends AsyncTask<String, Void, String> {
 
         protected String doInBackground(String... params) {
@@ -56,7 +58,7 @@ public class HomeActivity extends AppCompatActivity {
                 http.setDoInput(true);
                 http.setDoOutput(true);
 
-                // I need an Output Stream to write the output on the API
+                // I need an Output Stream to sent params to the API
                 OutputStream out_stream = http.getOutputStream();
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(out_stream, "UTF-8"));
 
@@ -103,6 +105,8 @@ public class HomeActivity extends AppCompatActivity {
         amount = (EditText) findViewById(R.id.amount);
         convert = (Button) findViewById(R.id.convert);
         result = (TextView) findViewById(R.id.result);
+        rate_result = (TextView) findViewById(R.id.textViewRate);
+
 
 
         // Referencing the spinners we have
@@ -144,23 +148,27 @@ public class HomeActivity extends AppCompatActivity {
                         if (spinner1.getSelectedItem().toString().equals("USD") && spinner2.getSelectedItem().toString().equals("USD")) {
                             answer = amount_entered;
                             result.setText(answer + "  $");
+                            rate_result.setText("LIRA RATE is "+lira_rate+ "L.L");
                         }
                         // Converting from USD to LBP
                         else if (spinner1.getSelectedItem().toString().equals("USD") && spinner2.getSelectedItem().toString().equals("LBP")) {
                             answer = (Double) amount_entered * lira_rate;
                             result.setText((new DecimalFormat("##.####").format(answer)) + "  L.L");
+                            rate_result.setText("LIRA RATE is "+lira_rate+ "L.L");
                             task.execute(rate, value_entered,currency,url);
                         }
                         // Converting from LBP to LBP
                         else if (spinner1.getSelectedItem().toString().equals("LBP") && spinner2.getSelectedItem().toString().equals("LBP")) {
                             answer = amount_entered;
                             result.setText(answer + "  L.L");
+                            rate_result.setText("LIRA RATE is "+lira_rate+ "L.L");
                         }
                         // Converting from LBP to USD
                         else if (spinner1.getSelectedItem().toString().equals("LBP") && spinner2.getSelectedItem().toString().equals("USD")) {
                             answer = (Double) amount_entered / lira_rate;
                             result.setText((new DecimalFormat("##.####").format(answer)) + "  $");
                             task.execute(rate, value_entered,currency,url);
+                            rate_result.setText("LIRA RATE is "+lira_rate+ "L.L");
                         }
                     } catch (NumberFormatException e) {
                         Toast.makeText(getApplicationContext(), "Error: The format is incorrect. Please enter a correct number", Toast.LENGTH_LONG).show();
