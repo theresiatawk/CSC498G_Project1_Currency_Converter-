@@ -35,12 +35,15 @@ public class HomeActivity extends AppCompatActivity {
     public class DownloadTask extends AsyncTask<String, Void, String> {
 
         protected String doInBackground(String... params) {
-            String data_to_send = params[0];
+            String first_param = params[0];
+            String second_param= params[1];
+            String third_param= params[2];
+
             URL url;
             HttpURLConnection http;
 
             try{
-                url = new URL(params[1]);
+                url = new URL(params[3]);
 
                 // Opening a connection between android app and the url
                 http = (HttpURLConnection) url.openConnection();
@@ -48,36 +51,17 @@ public class HomeActivity extends AppCompatActivity {
                 http.setRequestMethod("POST");
                 http.setDoOutput(true);
 
-                // I need an Input Stream to write the output to the API
+                // I need an Output Stream to write the output on the API
                 OutputStream out = http.getOutputStream();
                 BufferedWriter br = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
-                String post = URLEncoder.encode("data", "UTF-8")+ "=" + URLEncoder.encode(data_to_send, "UTF-8");
 
-                // Cursor that will read the output of the api
-
-                // The data cursor did not reach the end of the file repeat
+                String post1 = URLEncoder.encode("currency_rate", "UTF-8")+ "=" + URLEncoder.encode(first_param, "UTF-8")+"&"+URLEncoder.encode("amount_to_be_converted", "UTF-8")+ "=" + URLEncoder.encode(second_param, "UTF-8") + "&" + URLEncoder.encode("currency", "UTF-8")+ "=" + URLEncoder.encode(third_param, "UTF-8");
 
             }
             catch(Exception e){
                 e.printStackTrace();
             }
             return null;
-        }
-        protected void onPostExecute(String s){
-            Log.i("Result", s);
-
-            super.onPostExecute(s);
-
-            try{
-                // Convert the string that we have to a json object
-                JSONObject json = new JSONObject(s);
-                String rate = json.getString("Rate");
-                Log.i("Final rate", rate);
-
-            }
-            catch(Exception e){
-                e.printStackTrace();
-            }
         }
     }
     @Override
@@ -141,7 +125,7 @@ public class HomeActivity extends AppCompatActivity {
                         else if (spinner1.getSelectedItem().toString().equals("USD") && spinner2.getSelectedItem().toString().equals("LBP")) {
                             answer = (Double) amount_entered * lira_rate;
                             result.setText(answer + "  L.L");
-//                            task.execute(rate, value_entered,currency,url);
+                            task.execute(rate, value_entered,currency,url);
                         }
                         // Converting from LBP to USD
                         else if (spinner1.getSelectedItem().toString().equals("LBP") && spinner2.getSelectedItem().toString().equals("LBP")) {
