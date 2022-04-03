@@ -16,12 +16,16 @@ import android.widget.Toast;
 
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.DecimalFormat;
 
 
 public class HomeActivity extends AppCompatActivity {
@@ -49,20 +53,40 @@ public class HomeActivity extends AppCompatActivity {
                 http = (HttpURLConnection) url.openConnection();
 
                 http.setRequestMethod("POST");
+                http.setDoInput(true);
                 http.setDoOutput(true);
 
                 // I need an Output Stream to write the output on the API
-                OutputStream out = http.getOutputStream();
-                BufferedWriter br = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
+                OutputStream out_stream = http.getOutputStream();
+                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(out_stream, "UTF-8"));
 
-                String post1 = URLEncoder.encode("currency_rate", "UTF-8")+ "=" + URLEncoder.encode(first_param, "UTF-8")+"&"+URLEncoder.encode("amount_to_be_converted", "UTF-8")+ "=" + URLEncoder.encode(second_param, "UTF-8") + "&" + URLEncoder.encode("currency", "UTF-8")+ "=" + URLEncoder.encode(third_param, "UTF-8");
+                String post1 = URLEncoder.encode("currency_rate", "UTF-8")+"="+ URLEncoder.encode(first_param, "UTF-8")+"&"+URLEncoder.encode("amount_to_be_converted", "UTF-8")+"="+ URLEncoder.encode(second_param, "UTF-8") +"&"+ URLEncoder.encode("currency", "UTF-8")+"="+ URLEncoder.encode(third_param, "UTF-8");
+                bw.write(post1);
+                bw.flush();
+                bw.close();
+                out_stream.close();
 
+                InputStream in_stream = http.getInputStream();
+                BufferedReader br = new BufferedReader(new InputStreamReader(in_stream, "iso-8859-1"));
+                String result = "";
+                String line = "";
+                while((line = br.readLine())!= null){
+                    result += line;
+                }
+                br.close();
+                in_stream.close();
+                http.disconnect();
+                return result;
             }
             catch(Exception e){
                 e.printStackTrace();
+                return null;
             }
-            return null;
         }
+        protected void onPostExecute(String s){
+            super.onPostExecute(s);
+        }
+
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,19 +148,19 @@ public class HomeActivity extends AppCompatActivity {
                         // Converting from USD to LBP
                         else if (spinner1.getSelectedItem().toString().equals("USD") && spinner2.getSelectedItem().toString().equals("LBP")) {
                             answer = (Double) amount_entered * lira_rate;
-                            result.setText(answer + "  L.L");
+                            result.setText((new DecimalFormat("##.####").format(answer)) + "  L.L");
                             task.execute(rate, value_entered,currency,url);
                         }
-                        // Converting from LBP to USD
+                        // Converting from LBP to LBP
                         else if (spinner1.getSelectedItem().toString().equals("LBP") && spinner2.getSelectedItem().toString().equals("LBP")) {
                             answer = amount_entered;
                             result.setText(answer + "  L.L");
-//                            task.execute(rate, value_entered,currency,url);
                         }
-                        // Converting from LBP to LBP
+                        // Converting from LBP to USD
                         else if (spinner1.getSelectedItem().toString().equals("LBP") && spinner2.getSelectedItem().toString().equals("USD")) {
                             answer = (Double) amount_entered / lira_rate;
-                            result.setText(answer + "  $");
+                            result.setText((new DecimalFormat("##.####").format(answer)) + "  $");
+                            task.execute(rate, value_entered,currency,url);
                         }
                     } catch (NumberFormatException e) {
                         Toast.makeText(getApplicationContext(), "Error: The format is incorrect. Please enter a correct number", Toast.LENGTH_LONG).show();
