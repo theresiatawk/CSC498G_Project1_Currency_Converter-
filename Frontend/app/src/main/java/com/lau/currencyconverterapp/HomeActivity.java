@@ -16,10 +16,12 @@ import android.widget.Toast;
 
 import org.json.JSONObject;
 
+import java.io.BufferedWriter;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 
 
 public class HomeActivity extends AppCompatActivity {
@@ -32,15 +34,13 @@ public class HomeActivity extends AppCompatActivity {
     int lira_rate;
     public class DownloadTask extends AsyncTask<String, Void, String> {
 
-        protected String doInBackground(String... urls) {
-
+        protected String doInBackground(String... params) {
+            String data_to_send = params[0];
             URL url;
             HttpURLConnection http;
-            String urlParameters;
 
             try{
-                url = new URL(urls[0]);
-                urlParameters = "currency_amount=lira_rate&amount_to_be_converted=amount_entered&currency=currency";
+                url = new URL(params[1]);
 
                 // Opening a connection between android app and the url
                 http = (HttpURLConnection) url.openConnection();
@@ -50,10 +50,10 @@ public class HomeActivity extends AppCompatActivity {
 
                 // I need an Input Stream to write the output to the API
                 OutputStream out = http.getOutputStream();
-                OutputStreamWriter writer = new OutputStreamWriter(out);
+                BufferedWriter br = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
+                String post = URLEncoder.encode("data", "UTF-8")+ "=" + URLEncoder.encode(data_to_send, "UTF-8");
 
                 // Cursor that will read the output of the api
-                writer.write(urlParameters);
 
                 // The data cursor did not reach the end of the file repeat
 
@@ -86,6 +86,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         Intent x = getIntent();
         lira_rate = x.getIntExtra("lira_rate", 0);
+        String rate = lira_rate + "";
 
         // Hiding the Action Bar from the layout
         getSupportActionBar().hide();
@@ -117,14 +118,16 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Double answer;
                 // Getting the object amount and converting it to string with removing spaces
-                String value_entered = amount.getText().toString().replaceAll(" ","");
+                String value_entered = amount.getText().toString().replaceAll(" ", "");
+
+                String url = "http://192.168.106.1/CSC498G_Project1_Currency_Converter-/backend/post.php";
+                DownloadTask task = new DownloadTask();
 
                 // In case no value was entered by the user
                 if (value_entered.length() == 0) {
                     String message = "Error: You should fill the amount to convert!";
                     Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-                }
-                else {
+                } else {
                     // Try catch method in case the user has entered a wrong number format
                     try {
                         Double amount_entered = Double.parseDouble(value_entered);
@@ -138,11 +141,13 @@ public class HomeActivity extends AppCompatActivity {
                         else if (spinner1.getSelectedItem().toString().equals("USD") && spinner2.getSelectedItem().toString().equals("LBP")) {
                             answer = (Double) amount_entered * lira_rate;
                             result.setText(answer + "  L.L");
+//                            task.execute(rate, value_entered,currency,url);
                         }
                         // Converting from LBP to USD
                         else if (spinner1.getSelectedItem().toString().equals("LBP") && spinner2.getSelectedItem().toString().equals("LBP")) {
                             answer = amount_entered;
                             result.setText(answer + "  L.L");
+//                            task.execute(rate, value_entered,currency,url);
                         }
                         // Converting from LBP to LBP
                         else if (spinner1.getSelectedItem().toString().equals("LBP") && spinner2.getSelectedItem().toString().equals("USD")) {
@@ -155,6 +160,5 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 }
